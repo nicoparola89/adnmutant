@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  ismutantservice:
+    build:
+      context: .
+    environment:
+      - URL_ELASTIC=${URL_ELASTIC}
+    ports:
+      - "8080:8080"
+    links:
+      - elasticsearch
+    networks:
+      - elk
+  elasticsearch:
+    image: elasticsearch:6.6.2
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elk
+networks:
+  elk:
+    driver: bridge

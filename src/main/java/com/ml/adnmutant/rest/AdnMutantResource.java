@@ -29,6 +29,7 @@ public class AdnMutantResource {
      */
     @PostMapping("/mutant")
     public ResponseEntity isMutant(@Valid @RequestBody Dna dna) {
+        System.out.println("PRUEBA NUEVA IMAGEN");
         Pattern p = Pattern.compile("^[ATCG]+$");
         boolean adnOk = false;
         int adnSize = dna.getDna().size();
