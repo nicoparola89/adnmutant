@@ -142,7 +142,7 @@ public class IsMutantServiceImpl implements IsMutantService {
     @Override
     public Stats getStats(){
         Stats stats = adnRepositoryCustom.getStats();
-        if(stats.getCountHumanDna() == 0){
+        if(stats.getCountHumanDna() == null || stats.getCountHumanDna() == 0){
             stats.setRatio(1d);
         }else {
             Double ratio = stats.getCountMutantDna() *1.0d /stats.getCountHumanDna();

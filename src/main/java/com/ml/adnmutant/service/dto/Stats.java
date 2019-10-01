@@ -2,8 +2,8 @@ package com.ml.adnmutant.service.dto;
 
 public class Stats {
 
-    private Long countMutantDna;
-    private Long countHumanDna;
+    private Long countMutantDna = 0l;
+    private Long countHumanDna = 0l;
     private Double ratio;
 
     public Long getCountMutantDna() {
