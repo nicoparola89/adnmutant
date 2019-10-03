@@ -29,11 +29,9 @@ public class AdnMutantResource {
      */
     @PostMapping("/mutant")
     public ResponseEntity isMutant(@Valid @RequestBody Dna dna) {
-        System.out.println("PRUEBA NUEVA IMAGEN");
         Pattern p = Pattern.compile("^[ATCG]+$");
         boolean adnOk = false;
-        int adnSize = dna.getDna().size();
-        char[][] adn = new char[dna.getDna().size()][];
+        int adnSize = dna.getDna().length;
         for(String cadena:dna.getDna()){
             Matcher m = p.matcher(cadena);
 
@@ -43,10 +41,8 @@ public class AdnMutantResource {
             }
 
         }
-        for(int i =0;dna.getDna().size() -1 >= i; i++){
-            adn[i] = dna.getDna().get(i).toCharArray();
-        }
-        if(isMutantService.isMutant(adn)){
+
+        if(isMutantService.isMutant(dna.getDna())){
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

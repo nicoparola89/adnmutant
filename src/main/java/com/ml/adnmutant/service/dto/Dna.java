@@ -3,13 +3,14 @@ package com.ml.adnmutant.service.dto;
 import java.util.List;
 
 public class Dna {
-    private List<String> dna;
+    private String[] dna;
 
-    public List<String> getDna() {
+    public String[] getDna() {
         return dna;
     }
 
-    public void setDna(List<String> dna) {
+    public void setDna(String[] dna) {
         this.dna = dna;
     }
 }
+

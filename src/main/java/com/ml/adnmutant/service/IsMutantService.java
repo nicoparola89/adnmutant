@@ -10,7 +10,7 @@ public interface IsMutantService {
      * @param Char[][] ADN
      * @return boolean is mutant and
      */
-    boolean isMutant(char[][] adn);
+    boolean isMutant(String[] adn);
 
     Stats getStats();
 
