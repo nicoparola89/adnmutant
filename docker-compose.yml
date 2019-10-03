@@ -4,8 +4,6 @@ services:
   ismutantservice:
     build:
       context: .
-    environment:
-      - URL_ELASTIC=${URL_ELASTIC}
     ports:
       - "80:8080"
     links:
