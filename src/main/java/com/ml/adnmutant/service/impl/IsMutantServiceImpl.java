@@ -5,11 +5,14 @@ import com.ml.adnmutant.repository.AdnRepositoryCustom;
 import com.ml.adnmutant.service.AdnService;
 import com.ml.adnmutant.service.IsMutantService;
 import com.ml.adnmutant.service.dto.Stats;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 @Transactional
@@ -28,25 +31,41 @@ public class IsMutantServiceImpl implements IsMutantService {
 
     @Override
     public boolean isMutant(String[] dna) {
+        if(dna.length < 4){
+            return false;
+        }
         char[][] adn = new char[dna.length][];
+
+        String matrixHorizontal = "";
         for(int i =0;dna.length -1 >= i; i++){
+            matrixHorizontal += dna[i];
             adn[i] = dna[i].toCharArray();
         }
+        String hash = DigestUtils
+                .md5Hex(matrixHorizontal).toUpperCase();
+
+        Adn adnFind = adnService.findById(hash);
+        if(adnFind != null){
+            return adnFind.getMutant();
+        }
+
         secuencesFound = 0;
         boolean isMutant = false;
         firstLoop:
         for(int i = 0; i < adn.length; i++ ) {
             for(int j = 0; j <  adn.length; j++ ) {
                 if(i == 0) {
-                    if( searchVertica(adn, i,j,adn[i][j],1) || searchDiagonal(adn, i,j,adn[i][j],1) ||
-                            searchInverseDiagonal(adn, i,j,adn[i][j],1)) {
+                    if( searchVertica(adn, i,j,adn[i][j],1) ||
+                            searchDiagonal(adn, i,j,adn[i][j],1) ||
+                                searchInverseDiagonal(adn, i,j,adn[i][j],1)) {
                         isMutant = true;
                         break firstLoop;
                     }
                 }
                 if(j == 0) {
                     if(i != 0){
-                        if( searchHorizontal(adn, i,j,adn[i][j],1) ||  searchDiagonal(adn, i,j,adn[i][j],1)) {
+                        if( searchHorizontal(adn, i,j,adn[i][j],1) ||
+                                searchDiagonal(adn, i,j,adn[i][j],1)) {
                             isMutant = true;
                             break;
                         }
@@ -57,8 +76,6 @@ public class IsMutantServiceImpl implements IsMutantService {
                         }
 
                     }
-
-
                 }
                 if(j == adn.length - 1 && i != 0) {
                     if(searchInverseDiagonal(adn, i,j,adn[i][j],1)) {
@@ -71,6 +88,7 @@ public class IsMutantServiceImpl implements IsMutantService {
             }
         }
         Adn adnRegister = new Adn();
+        adnRegister.setId(hash);
         adnRegister.setMutant(isMutant);
         adnRegister.setAdn(adn);
         adnService.save(adnRegister);

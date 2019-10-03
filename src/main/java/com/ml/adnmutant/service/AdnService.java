@@ -12,6 +12,8 @@ public interface AdnService {
      */
     Adn save(Adn adn);
 
+    Adn findById(String id);
+
     Iterable<Adn> findAll();
 
 }

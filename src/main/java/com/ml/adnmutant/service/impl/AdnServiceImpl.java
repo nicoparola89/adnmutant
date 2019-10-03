@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -34,6 +35,14 @@ public class AdnServiceImpl implements AdnService {
         return adnRepository.findAll();
     }
 
+    public Adn findById(String id){
+        Optional<Adn> adn = adnRepository.findById(id);
+        if(adn.isPresent()){
+            return adn.get();
+        }else{
+            return null;
+        }
+    }
 
 
 

@@ -32,14 +32,15 @@ public class AdnMutantResource {
         Pattern p = Pattern.compile("^[ATCG]+$");
         boolean adnOk = false;
         int adnSize = dna.getDna().length;
+
         for(String cadena:dna.getDna()){
             Matcher m = p.matcher(cadena);
-
-            adnOk = m.find() && (adnSize == cadena.length());
-            if(!adnOk){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            if (!m.find()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Characters not accepted");
             }
-
+            if (adnSize != cadena.length()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The matrix must be NxN");
+            }
         }
 
         if(isMutantService.isMutant(dna.getDna())){
