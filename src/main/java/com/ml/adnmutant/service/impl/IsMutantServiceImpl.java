@@ -110,7 +110,7 @@ public class IsMutantServiceImpl implements IsMutantService {
                 if(secuencesFound == 2){
                     return true;
                 }else{
-                    return searchVertica(adn, x + 2,y,charActual,coincidencia+1);
+                    return searchVertica(adn, x + 2,y,charActual,1);
                 }
             }else{
                 return searchVertica(adn, x + 1,y,charActual,coincidencia+1);
@@ -133,7 +133,7 @@ public class IsMutantServiceImpl implements IsMutantService {
                 if(secuencesFound == 2){
                     return true;
                 }else{
-                    return searchHorizontal(adn, x ,y + 2,charActual,coincidencia+1);
+                    return searchHorizontal(adn, x ,y + 2,charActual,1);
                 }
             }else{
                 return searchHorizontal(adn, x ,y + 1,charActual,coincidencia+1);
@@ -154,7 +154,7 @@ public class IsMutantServiceImpl implements IsMutantService {
                 if(secuencesFound == 2){
                     return true;
                 }else{
-                    return searchDiagonal(adn,x + 2,y +2,charActual,coincidencia+1);
+                    return searchDiagonal(adn,x + 2,y +2,charActual,1);
                 }
             }else{
                 return searchDiagonal(adn,x + 1,y +1,charActual,coincidencia+1);
@@ -177,7 +177,7 @@ public class IsMutantServiceImpl implements IsMutantService {
                 if(secuencesFound == 2){
                     return true;
                 }else{
-                    return searchInverseDiagonal(adn,x + 2,y - 2,charActual,coincidencia+1);
+                    return searchInverseDiagonal(adn,x + 2,y - 2,charActual,1);
                 }
             }else{
                 return searchInverseDiagonal(adn,x + 1,y - 1,charActual,coincidencia+1);
